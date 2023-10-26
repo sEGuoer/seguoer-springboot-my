@@ -42,4 +42,16 @@ public class DefaultConfigActuatorTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("components.ping.status",Matchers.endsWith("UP")))
         ;
     }
+
+    @Test
+    @DisplayName("测试增加了自定义 CustomHealthIndicator 之后的 /actuator/health 页面内容")
+    void actuatorCustomHealthIndicator() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/actuator/health"))
+                .andExpect(MockMvcResultMatchers.jsonPath("status", Matchers.oneOf("UP", "DOWN")))
+                .andExpect(MockMvcResultMatchers.jsonPath("components.custom.status", Matchers.oneOf("UP", "DOWN")))
+                .andExpect(MockMvcResultMatchers.jsonPath("components.custom.details.message", Matchers.oneOf("is even", "is odd")))
+                .andExpect(MockMvcResultMatchers.jsonPath("components.diskSpace.status").value("UP"))
+                .andExpect(MockMvcResultMatchers.jsonPath("components.ping.status").value("UP"))
+        ;
+    }
 }
