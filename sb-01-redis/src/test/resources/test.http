@@ -1,3 +1,8 @@
 GET http://localhost:8080/hello-redis
 
+###
+GET http://localhost:8080/saveObjectToRedis
+
+###
+GET http://localhost:8080/getObjectFromRedis
 
