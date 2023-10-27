@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.seguoer</groupId>
     <artifactId>First-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-new</version>
     <name>sb-03-seguoer.NewFirststarter</name>
     <description>sb-03-seguoer.NewFirststarter</description>
     <properties>
