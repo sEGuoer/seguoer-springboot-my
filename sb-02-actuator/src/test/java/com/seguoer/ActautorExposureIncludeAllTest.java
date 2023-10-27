@@ -70,4 +70,35 @@ public class ActautorExposureIncludeAllTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("name").value("application.started.time"))
         ;
     }
+
+    @Test
+    @DisplayName("测试增加了 `custom.viewsCount` 指标之后的 /actuator/metrics 页面内容")
+    void actuatorMetricsWithCustomMetrics() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/actuator/metrics"))
+                .andExpect(MockMvcResultMatchers.jsonPath("names", Matchers.hasItems("custom.viewsCount")))
+        ;
+    }
+
+    @Test
+    @DisplayName("测试增加了 /actuator/metrics/custom.viewsCount 指标详情")
+    void actuatorMetricsWithCustomMetricsDetail() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/actuator/metrics/custom.viewsCount"))
+                .andExpect(MockMvcResultMatchers.jsonPath("name", Matchers.is("custom.viewsCount")))
+                .andExpect(MockMvcResultMatchers.jsonPath("measurements[0]").value(Matchers.hasEntry("statistic", "COUNT")))
+                .andExpect(MockMvcResultMatchers.jsonPath("measurements[0].value", Matchers.greaterThanOrEqualTo(0.0)))
+        ;
+    }
+
+    @Test
+    @DisplayName("测试访问 `/custom-metrics` 两次之后，`/actuator/metrics/custom.viewsCount` 指标详情的内容")
+    void actuatorMetricsWithCustomMetricsDetailAfterVisitCustomMetricsPage() throws Exception {
+        int visitCount = 2;
+        for (int i = 0; i < visitCount; i++) {
+            mvc.perform(MockMvcRequestBuilders.get("/custom-metrics"));
+        }
+
+        mvc.perform(MockMvcRequestBuilders.get("/actuator/metrics/custom.viewsCount"))
+                .andExpect(MockMvcResultMatchers.jsonPath("measurements[0].value", Matchers.greaterThanOrEqualTo((double) visitCount)))
+        ;
+    }
 }
