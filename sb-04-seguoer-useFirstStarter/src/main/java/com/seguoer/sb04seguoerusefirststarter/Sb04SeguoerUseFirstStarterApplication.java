@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@AutoMyFristConfig
 public class Sb04SeguoerUseFirstStarterApplication {
 
     public static void main(String[] args) {
