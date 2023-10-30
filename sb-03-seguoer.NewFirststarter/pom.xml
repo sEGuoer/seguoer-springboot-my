@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.seguoer</groupId>
-    <artifactId>First-spring-boot-starter</artifactId>
+    <artifactId>First-spring-boot-starter-autoconfigure</artifactId>
     <version>0.0.1-new</version>
     <name>sb-03-seguoer.NewFirststarter</name>
-    <description>sb-03-seguoer.NewFirststarter</description>
+    <description>sb-03-seguoer.NewFirststarter`s autoconfig</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -51,6 +51,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <skip>true</skip>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
