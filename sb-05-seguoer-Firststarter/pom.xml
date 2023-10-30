@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.seguoer</groupId>
     <artifactId>First-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-new</version>
     <name>sb-05-seguoer-Firststarter</name>
     <description>sb-05-seguoer-Firststarter</description>
     <properties>
@@ -18,24 +18,10 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.seguoer</groupId>
+            <artifactId>First-spring-boot-starter-autoconfigure</artifactId>
+            <version>0.0.1-new</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
