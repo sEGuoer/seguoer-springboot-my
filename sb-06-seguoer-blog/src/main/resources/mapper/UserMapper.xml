@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seguoer.mapper.UserMapper">
+
+    <select id="selectUsersByName" resultMap="RuseltMape">
+        select *
+        from user
+        where email LIKE #{email}
+    </select>
+    <select id="selectAllUser" resultMap="RuseltMape">
+        select *
+        from user u
+                 LEFT JOIN blog_table b
+                           on u.id = b.user_id
+    </select>
+    <insert id="addNewUser" useGeneratedKeys="true">
+        insert into user (email, password, username, account, loginTime)
+        values (#{name}, #{password}, #{username}, #{account}, #{loginTime})
+    </insert>
+    <delete id="deleteUsersByID">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+    <update id="changeUsersByID">
+        update user
+        set account = #{account}
+        where id = #{id}
+    </update>
+    <update id="changeBlogByID">
+        update blog_table
+        set content = #{content}
+        where id = #{id}
+    </update>
+    <select id="selectBlogContent" resultType="string">
+        select content
+        from blog_table
+        where title = #{title}
+    </select>
+    <select id="selectAllBlog" resultMap="AllBlog">
+        select *
+        from blog_table b
+                 LEFT JOIN user u
+                           on b.user_id = u.id
+    </select>
+    <select id="selectBlogs" resultMap="AllBlog">
+        select *
+        from blog_table
+        where id = #{id}
+    </select>
+    <select id="selectUsers" resultMap="user">
+        select *
+        from blog_table
+    </select>
+    <select id="selectBlogByPage" resultMap="AllBlog">
+        select *
+        from blog_table limit #{rowCount}
+        offset #{offset}
+    </select>
+    <delete id="deleteBlogByID">
+        delete
+        from blog_table
+        where id = #{id}
+    </delete>
+    <delete id="deleteBlogByTitle">
+        delete
+        from blog_table
+        where title = #{title}
+    </delete>
+    <insert id="addNewBlog">
+        insert into blog_table (id, title, creator, cover, slug, create_time, update_time, user_id, content,
+                                content_type, reading_time)
+        values (#{id}, #{title}, #{creator}, #{cover}, #{slug}, #{createTime}, #{updateTime}, #{userId}, #{content},
+                #{contentType}, #{readingTime})
+    </insert>
+    <update id="updateBlog">
+        update blog_table
+        <set>
+            <if test="slug != null and slug !=''">
+                slug = #{slug},
+            </if>
+            <if test="updateTime != null and updateTime !=''">
+                updateTime = #{updateTime},
+            </if>
+            <if test="content != null and content !=''">
+                content = #{content},
+            </if>
+        </set>
+        where title = #{title}
+    </update>
+    <resultMap id="RuseltMape" type="com.seguoer.po.User" autoMapping="true">
+        <collection property="blogs" ofType="com.seguoer.po.Blog" autoMapping="true">
+        </collection>
+    </resultMap>
+    <resultMap id="user" type="com.seguoer.po.User" autoMapping="true">
+        <id property="id" column="id"/>
+        <collection property="blogs" ofType="com.seguoer.po.Blog" autoMapping="true" select="selectBlogs"
+                    column="id"/>
+    </resultMap>
+    <resultMap id="AllBlog" type="com.seguoer.po.Blog" autoMapping="true">
+        <association property="user" javaType="com.seguoer.po.User" autoMapping="true">
+        </association>
+    </resultMap>
+</mapper>
